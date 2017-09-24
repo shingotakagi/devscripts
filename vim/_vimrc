@@ -1,0 +1,93 @@
+" In order to use this script, you should create a symlink to this file
+" from your home directory on windows.
+" mklink _vimrc E:\src\devscripts\vim\_vimrc
+
+
+" Files -------------------
+
+" disable the creation ~ files
+set nobackup
+
+" Disable swap files.
+set noswapfile
+
+
+
+" Colors -------------------
+
+" Set color scheme.
+colorscheme desert
+
+" Switch on syntax highlighting.
+syntax on
+
+
+
+" Spaces -------------------
+
+" this makes it so it expands out the tabs to spaces
+" note you can use "retab to change all existing tab characters to match
+" current tabbing scheme
+set expandtab
+
+" this makes vim use 4 spaces for the tabs
+set tabstop=2
+
+" this set how many columns to insert when tab is pressed in insert mode
+set softtabstop=2 
+
+" this sets how many columns to shift when using the ">>" and "<<" reindent operations.
+set shiftwidth=2
+
+
+
+" Line Width -------------------
+
+" These settings are to avoid vim from inserting line break as line grows
+set wrap
+set linebreak
+set nolist " list disable linebreak
+set textwidth=0
+set wrapmargin=0
+
+
+
+" Search -------------------
+
+" Highlight all search matches
+set hlsearch
+" Set search highlight color.
+"hi Search guibg=Yellow.
+
+" make the text searches in vim be case sensitive
+" type set ignorecase to make it insensitive
+set ignorecase
+
+
+
+" Other -------------------
+
+" Make vim show current row and column at the bottom right of the screen.
+set ruler
+
+" Apply indentation of the current line to the next line.
+set autoindent
+
+" Indent smartly for the type of file being editted.
+set smartindent
+
+" Allow backspace to move the cursor over automatically inserted indentation and over the start and end of a line
+set bs=2
+
+" Hide the mouse pointer while typing
+set mousehide
+
+
+
+
+
+
+
+
+
+
