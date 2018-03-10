@@ -82,10 +82,13 @@ PATH=${UNPACKS_DIR}/apache-ant-1.10.1/bin:${PATH}
 # --------------------------------------------------------------------
 
 # Setup android variables.
-export ANDROID_SDK_ROOT=${INSTALLS_DIR}/android-sdk
-export ANDROID_NDK_ROOT=${INSTALLS_DIR}/android-ndk-r10e
-export ANDROID_TOOLCHAIN_ROOT=${INSTALLS_DIR}/android_toolchain
+#export ANDROID_SDK_ROOT=${INSTALLS_DIR}/android-sdk
+#export ANDROID_NDK_ROOT=${INSTALLS_DIR}/android-ndk-r10e
+#export ANDROID_TOOLCHAIN_ROOT=${INSTALLS_DIR}/android_toolchain
 
 # Android platform tools
-PATH=${INSTALLS_DIR}/android-sdk/platform-tools:${PATH}
+#PATH=${INSTALLS_DIR}/android-sdk/platform-tools:${PATH}
+
+
+PATH=/c/Users/shing/AppData/Local/Android/sdk/build-tools/25.0.3:${PATH}
   
