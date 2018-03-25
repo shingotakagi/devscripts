@@ -76,6 +76,11 @@ PATH=${UNPACKS_DIR}/eclipse:${PATH}
 # Ant
 PATH=${UNPACKS_DIR}/apache-ant-1.10.1/bin:${PATH}
 
+# Arnold
+export ARNOLD_PATH=/e/unpacks/Arnold-5.0.2.4-windows
+LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${UNPACKS_DIR}/Arnold-5.0.2.4-windows/lib
+PATH=${UNPACKS_DIR}/Arnold-5.0.2.4-windows/bin:${PATH}
+
 
 
 # Programs installed for specialized development.
