@@ -31,7 +31,7 @@ rem - if you want to use the 32 to 64 bit cross compiler, use x86_amd64
 rem - SET LLL_VS_SCRIPT="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64 
 SET LLL_VS_SCRIPT="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
 rem - msys2 install location
-SET LLL_MSYS2_DIR="E:\installs\msys2"
+SET LLL_MSYS2_DIR="C:\installs\msys2"
 rem - ------------------------------------------------------------------------------------------
 
 
