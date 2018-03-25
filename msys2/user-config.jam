@@ -1,0 +1,5 @@
+# This file should placed in your home directory.
+using python : 2.7
+             : /c/Python27
+	     ;
+

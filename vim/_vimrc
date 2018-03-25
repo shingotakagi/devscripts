@@ -7,6 +7,7 @@
 
 " disable the creation ~ files
 set nobackup
+set nowritebackup
 
 " Disable swap files.
 set noswapfile

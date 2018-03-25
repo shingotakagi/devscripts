@@ -1,67 +1,83 @@
 #!/bin/bash
 
-
-
+# --------------------------------------------------------------------
 # About this script.
 # --------------------------------------------------------------------
-# This script configures environment variables for msys2 to target the
+# This script configures msys2 environment variables to target the
 # visual studio 64bit platform.
-# All other platforms are targeted by adjusting the CMake toolchain files
-# or other CMake files.
-# The CMake toolchain files specify the compilers, while the other CMake
-# files should adjust their paths according to the value of the ARCH variable.
 
+
+# --------------------------------------------------------------------
 # How to use this script.
 # --------------------------------------------------------------------
-# In your msys2 .bashrc file, simply source the setup_env.sh script in this directory.
-# source /e/src/devscripts/msys2/setup_env.sh
+# In your msys2 .bashrc file, simply source the setup_env.sh script 
+# in this directory.
+# source /c/dev/src/devscripts/msys2/setup_env.sh
 
 
+# --------------------------------------------------------------------
 # Adjust these local variables to accomodate your environment.
 # --------------------------------------------------------------------
 # This assumes you have divided your programs/libraries into those that
 # used a windows based installer vs those that were simply unpacked/unzipped.
-export INSTALLS_DIR=/e/installs
-export UNPACKS_DIR=/e/unpacks
+export INSTALLS_DIR=/c/installs
+export UNPACKS_DIR=/c/unpacks
+export WINDOWS_PROGRAMS="/c/Program Files"
+export WINDOWS_PROGRAMS_X86="/c/Program Files (x86)"
 
-
-
-# Determine some helpful variables.
-# --------------------------------------------------------------------
-# Get the directory of this script.
+# The directory containing this script.
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+
 # This example shows how to make a relative path into an absolute one.
 #TEST_DIR=`readlink -f ${SCRIPT_DIR}/../../..`
 #echo "test dir: ${TEST_DIR}"
 
 
-# Script Locations.
+# --------------------------------------------------------------------
+# Our helper functions.
+# --------------------------------------------------------------------
+prepend_library_path() {
+  LD_LIBRARY_PATH=$1:${LD_LIBRARY_PATH}
+}
+prepend_path() {
+  PATH=$1:${PATH}
+}
+
+
+# --------------------------------------------------------------------
+# Our paths.
 # --------------------------------------------------------------------
 
-# Add the dir for this script so that other existing or future scripts can be called.
-PATH=${SCRIPT_DIR}:${PATH}
+# Our devscripts directory.
+prepend_path ${SCRIPT_DIR}
 
 
-
-# Base programs are expected to installed to their default locations.
+# --------------------------------------------------------------------
+# Common or basic programs are expected to installed to their default locations.
 # --------------------------------------------------------------------
 
 # Java Setup.
-export JAVA_HOME="/c/Program Files/Java/jdk1.8.0_144"
-PATH="/c/Program Files/Java/jdk1.8.0_144/bin":${PATH}
+export JAVA_HOME=${WINDOWS_PROGRAMS}/Java/jdk1.8.0_144
+prepend_path "${JAVA_HOME}/bin"
 
 # Git
-PATH="/c/Program Files/Git/bin":${PATH}
+prepend_path "${WINDOWS_PROGRAMS}/Git/bin"
 
 # CMake
-PATH="/c/Program Files/CMake/bin":${PATH}
+prepend_path "${WINDOWS_PROGRAMS}/CMake/bin"
 
 # Path for xxd, which is part of vim for windows
-PATH="/c/Program Files (x86)/Vim/vim80":${PATH}
+prepend_path "${WINDOWS_PROGRAMS_X86}/Vim/vim80"
+
+# Python 2.7.14
+prepend_path "/c/Python27"
+
+# gVim 80
+prepend_path "${WINDOWS_PROGRAMS_X86}/Vim/vim80"
 
 
-
-# Programs unpacked for specialized development.
+# --------------------------------------------------------------------
+# Programs for development.
 # --------------------------------------------------------------------
 
 # Jom build tool
@@ -77,23 +93,12 @@ PATH=${UNPACKS_DIR}/eclipse:${PATH}
 PATH=${UNPACKS_DIR}/apache-ant-1.10.1/bin:${PATH}
 
 # Arnold
-export ARNOLD_PATH=/e/unpacks/Arnold-5.0.2.4-windows
-LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${UNPACKS_DIR}/Arnold-5.0.2.4-windows/lib
-PATH=${UNPACKS_DIR}/Arnold-5.0.2.4-windows/bin:${PATH}
+export ARNOLD_PATH=${UNPACKS_DIR}/Arnold-5.0.2.4-windows
+prepend_library_path ${ARNOLD_PATH}/lib
+prepend_path ${ARNOLD_PATH}/bin
 
-
-
-# Programs installed for specialized development.
 # --------------------------------------------------------------------
+# Our custom built programs.
+# -------------------------------------------------------------------
+source ${SCRIPT_DIR}/third_party.sh
 
-# Setup android variables.
-#export ANDROID_SDK_ROOT=${INSTALLS_DIR}/android-sdk
-#export ANDROID_NDK_ROOT=${INSTALLS_DIR}/android-ndk-r10e
-#export ANDROID_TOOLCHAIN_ROOT=${INSTALLS_DIR}/android_toolchain
-
-# Android platform tools
-#PATH=${INSTALLS_DIR}/android-sdk/platform-tools:${PATH}
-
-
-PATH=/c/Users/shing/AppData/Local/Android/sdk/build-tools/25.0.3:${PATH}
-  
