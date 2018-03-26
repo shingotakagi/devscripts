@@ -110,3 +110,8 @@ export ARNOLD_PATH=${UNPACKS_DIR}/Arnold-5.0.2.4-windows
 prepend_library_path ${ARNOLD_PATH}/lib
 prepend_path ${ARNOLD_PATH}/bin
 
+# --------------------------------------------------------------------
+# Our current compiler env. 
+# --------------------------------------------------------------------
+source ${SCRIPT_DIR}/vs2017_env.sh
+
