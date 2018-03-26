@@ -4,15 +4,6 @@ SRC_DIR=/c/dev/src
 BUILD_DIR=/c/dev/builds
 INSTALL_DIR=/c/dev/builds/installs
 
-prepend_env() {
-  # The .lib files are usually placed in the lib dirs.
-  LD_LIBRARY_PATH=${INSTALL_DIR}/$1/lib:${LD_LIBRARY_PATH}
-  # Sometimes the dlls are placed into the lib dir, so we add this to the path as well.
-  PATH=${INSTALL_DIR}/$1/lib:${PATH}
-  # Executables are usually placed in the bin dirs.
-  PATH=${INSTALL_DIR}/$1/bin:${PATH}
-}
-
 
 enter_build_dir() {
   lib_name=$1
@@ -25,7 +16,7 @@ enter_build_dir() {
 configure() {
   other_opts=$@
   echo "other_opts: ${other_opts}"
-  cmake -G"NMake Makefiles" \
+  cmake -G"Eclipse CDT4 - Ninja" \
 	-DBUILD_SHARED_LIBS=1 \
 	-DCMAKE_BUILD_TYPE=Debug \
 	-DCMAKE_INSTALL_PREFIX=${INSTALL_DIR}/${lib_name} \
@@ -128,7 +119,7 @@ build_oiio() {
   build
 }
 
-# GLEW needs to be build with visual studio 14.1
+# GLEW needs to be built with visual studio 
 prepend_library_path ${SRC_DIR}/glew-2.1.0/lib/Debug/x64
 prepend_path ${SRC_DIR}/glew-2.1.0/lib/Debug/x64
 prepend_library_path ${SRC_DIR}/glew-2.1.0/lib/Release/x64
@@ -169,4 +160,24 @@ build_appleseed() {
   
   # -DGLEW_INCLUDE_DIR=/c/dev/src/glew-2.1.0/include \
   # -DGLEW_LIBRARY=/c/dev/src/glew-2.1.0/lib/Debug/x64/glew32d.lib \
+}
+
+
+# TBB
+# TBB has no CMakeLists.txt so you'll need to build with Visual Stuio.
+# Build all the x64 configs. Then copy the DEBUG-MT and RELEASE-MT
+# contents into a lib dir at top of the source dir.
+prepend_library_path ${SRC_DIR}/tbb-2018_U2/lib
+prepend_path ${SRC_DIR}/tbb-2018_U2/lib
+
+# Embree
+prepend_env embree
+build_embree() {
+  enter_build_dir embree
+  opts="-DEMBREE_TBB_ROOT=${SRC_DIR}/tbb-2018_U2 \
+      -DEMBREE_ISPC_SUPPORT=0 \
+      -DEMBREE_TUTORIALS_LIBJPEG=0 \
+  "
+  configure ${opts}
+  build
 }

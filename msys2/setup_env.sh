@@ -36,13 +36,26 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 # --------------------------------------------------------------------
 # Our helper functions.
 # --------------------------------------------------------------------
+
+# Prepend the LD_LIBRARY_PATH with an absolute path.
 prepend_library_path() {
   LD_LIBRARY_PATH=$1:${LD_LIBRARY_PATH}
 }
+
+# Prepend the executable search path with an absolute path.
 prepend_path() {
   PATH=$1:${PATH}
 }
 
+# Prepend environment paths with binaries for custom built project. 
+prepend_env() {
+  # The .lib files are usually placed in the lib dirs.
+  LD_LIBRARY_PATH=${INSTALL_DIR}/$1/lib:${LD_LIBRARY_PATH}
+  # Sometimes the dlls are placed into the lib dir, so we add this to the path as well.
+  PATH=${INSTALL_DIR}/$1/lib:${PATH}
+  # Executables are usually placed in the bin dirs.
+  PATH=${INSTALL_DIR}/$1/bin:${PATH}
+}
 
 # --------------------------------------------------------------------
 # Our paths.
@@ -96,9 +109,4 @@ PATH=${UNPACKS_DIR}/apache-ant-1.10.1/bin:${PATH}
 export ARNOLD_PATH=${UNPACKS_DIR}/Arnold-5.0.2.4-windows
 prepend_library_path ${ARNOLD_PATH}/lib
 prepend_path ${ARNOLD_PATH}/bin
-
-# --------------------------------------------------------------------
-# Our custom built programs.
-# -------------------------------------------------------------------
-source ${SCRIPT_DIR}/third_party.sh
 

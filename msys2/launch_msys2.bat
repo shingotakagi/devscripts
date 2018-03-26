@@ -3,6 +3,7 @@ rem - this prevents the remarks and commands from showing
 
 
 
+rem - ------------------------------------------------------------------------------------------
 rem - About this Script.
 rem - ------------------------------------------------------------------------------------------
 rem - This batch script brings up an initial msys2 shell, targeting Windows platform.
@@ -14,6 +15,7 @@ rem - --------------------------------------------------------------------------
 
 
 
+rem - ------------------------------------------------------------------------------------------
 rem - Create a windows shortcut to this script for fast startup.
 rem - ------------------------------------------------------------------------------------------
 rem - Enter the following as the target for your windows shortcut.
@@ -23,27 +25,33 @@ rem - --------------------------------------------------------------------------
 
 
 
+rem - ------------------------------------------------------------------------------------------
 rem - Adjust these local script variables to accomodate your environment.
 rem - ------------------------------------------------------------------------------------------
 rem - visual studio native 64 bit shell
 rem - if you want to use the 32 bit compiler then use, x86
 rem - if you want to use the 32 to 64 bit cross compiler, use x86_amd64
-rem - SET LLL_VS_SCRIPT="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64 
-SET LLL_VS_SCRIPT="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+SET LLL_VS2015_ENV="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64 
+SET LLL_VS2017_ENV="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
 rem - msys2 install location
 SET LLL_MSYS2_DIR="C:\installs\msys2"
+
+
+
 rem - ------------------------------------------------------------------------------------------
-
-
-
 rem - The main logic.
 rem - ------------------------------------------------------------------------------------------
 
-rem - load visual studio environment variables
-call %LLL_VS_SCRIPT%
 
-rem - if there's no arguments we start an msys2 interactive shell
-if "%1"=="" goto INTERACTIVE
+if "%1"=="vs2015" (
+  call %LLL_VS2015_ENV%
+  goto INTERACTIVE
+)
+
+if "%1"=="vs2017" (
+  call %LLL_VS2017_ENV%
+  goto INTERACTIVE
+)
 
 rem - otherwise we run the script in the first argument instead of launching an interactive shell
 %LLL_MSYS2_DIR%\usr\bin\bash.exe -f %1 %2
