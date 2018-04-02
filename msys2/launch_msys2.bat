@@ -20,7 +20,7 @@ rem - Create a windows shortcut to this script for fast startup.
 rem - ------------------------------------------------------------------------------------------
 rem - Enter the following as the target for your windows shortcut.
 rem - The /c closes the first cmd shell. Use /k if you don't want to close the first shell.
-rem - %comspec% /c ""E:\src\devscripts\msys2\launch_msys2.bat" "
+rem - %comspec% /c ""C:\dev\src\devscripts\msys2\launch_msys2.bat" vs2017"
 rem - ------------------------------------------------------------------------------------------
 
 
@@ -32,7 +32,9 @@ rem - visual studio native 64 bit shell
 rem - if you want to use the 32 bit compiler then use, x86
 rem - if you want to use the 32 to 64 bit cross compiler, use x86_amd64
 SET LLL_VS2015_ENV="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64 
-SET LLL_VS2017_ENV="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+SET LLL_VS2017_VERSION="Community"
+rem - SET LLL_VS2017_VERSION="Professional"
+SET LLL_VS2017_ENV="C:\Program Files (x86)\Microsoft Visual Studio\2017\%LLL_VS2017_VERSION%\VC\Auxiliary\Build\vcvars64.bat"
 rem - msys2 install location
 SET LLL_MSYS2_DIR="C:\installs\msys2"
 
@@ -42,6 +44,8 @@ rem - --------------------------------------------------------------------------
 rem - The main logic.
 rem - ------------------------------------------------------------------------------------------
 
+rem - This is used by setup_env.sh to load a compiler specific environment. 
+SET LLL_VS_ENV=%1
 
 if "%1"=="vs2015" (
   call %LLL_VS2015_ENV%

@@ -1,7 +1,8 @@
 @echo off
 
-rem Make sure run this script a visual studio 2017 command prompt
-rem Make sure to copy user-config.jam into your home dir first.
+rem Make sure run to this script in a visual studio 2017 command prompt
+rem Copy this script into the boost dir.
+rem Copy the user-config.jam into your home dir first.
 rem This will make sure the boost_python gets built.
 
 rem Directory to boost root

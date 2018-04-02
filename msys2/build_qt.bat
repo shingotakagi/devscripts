@@ -1,13 +1,5 @@
-#echo off
+@echo off
 
-rem Make sure run this script a visual studio 2017 command prompt.
+configure.bat -debug -nomake examples -opensource -prefix C:\dev\builds\installs\qt-5.10.1
 
-rem Configure.
-configure -opensource
-
-rem Set env variable to build in parallel over multiple cores.
-set CL=/MP
-
-rem Build.
-nmake
 

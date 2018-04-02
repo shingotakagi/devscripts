@@ -3,9 +3,15 @@
 # --------------------------------------------------------------------
 # About this script.
 # --------------------------------------------------------------------
-# This script configures msys2 environment variables to target the
-# visual studio 64bit platform.
+# This script configures msys2 environment variables.
+# This assumes you have divided your programs/libraries into those that
+# used a windows based installer vs those that were simply unpacked/unzipped.
 
+# Adjust these local variables to accomodate your environment.
+export INSTALLS_DIR=/c/installs
+export UNPACKS_DIR=/c/unpacks
+export WINDOWS_PROGRAMS="/c/Program Files"
+export WINDOWS_PROGRAMS_X86="/c/Program Files (x86)"
 
 # --------------------------------------------------------------------
 # How to use this script.
@@ -14,16 +20,20 @@
 # in this directory.
 # source /c/dev/src/devscripts/msys2/setup_env.sh
 
+# --------------------------------------------------------------------
+# Dependencies.
+# --------------------------------------------------------------------
+# This script assumes you have the following in your unpacks dir.
+# apache-ant-1.10.1
+# Arnold-5.0.2.4
+# eclipse
+# ispc-v1.9.2-windows
+# jom_1_1_2
+# ninja-win-1.8.2
 
-# --------------------------------------------------------------------
-# Adjust these local variables to accomodate your environment.
-# --------------------------------------------------------------------
-# This assumes you have divided your programs/libraries into those that
-# used a windows based installer vs those that were simply unpacked/unzipped.
-export INSTALLS_DIR=/c/installs
-export UNPACKS_DIR=/c/unpacks
-export WINDOWS_PROGRAMS="/c/Program Files"
-export WINDOWS_PROGRAMS_X86="/c/Program Files (x86)"
+# This script assumes you have the following in your installs dir.
+# msys2
+# Qt/Qt5.10.1 (note the subdirectory, to allow multiple versions)
 
 # The directory containing this script.
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
@@ -94,16 +104,19 @@ prepend_path "${WINDOWS_PROGRAMS_X86}/Vim/vim80"
 # --------------------------------------------------------------------
 
 # Jom build tool
-PATH=${UNPACKS_DIR}/jom_1_1_2:${PATH}
+prepend_path ${UNPACKS_DIR}/jom_1_1_2
 
 # Ninja build tool
-PATH=${UNPACKS_DIR}/ninja-win-1.8.2:${PATH}
+prepend_path ${UNPACKS_DIR}/ninja-win-1.8.2
 
 # Eclipse
-PATH=${UNPACKS_DIR}/eclipse:${PATH}
+prepend_path ${UNPACKS_DIR}/eclipse
 
 # Ant
-PATH=${UNPACKS_DIR}/apache-ant-1.10.1/bin:${PATH}
+prepend_path ${UNPACKS_DIR}/apache-ant-1.10.1/bin
+
+# Enbree
+prepend_path ${UNPACKS_DIR}/ispc-v1.9.2-windows
 
 # Arnold
 export ARNOLD_PATH=${UNPACKS_DIR}/Arnold-5.0.2.4-windows
@@ -111,7 +124,7 @@ prepend_library_path ${ARNOLD_PATH}/lib
 prepend_path ${ARNOLD_PATH}/bin
 
 # --------------------------------------------------------------------
-# Our current compiler env. 
+# Load compiler specific env variables. 
 # --------------------------------------------------------------------
-source ${SCRIPT_DIR}/vs2017_env.sh
+source ${SCRIPT_DIR}/${LLL_VS_ENV}_env.sh
 
