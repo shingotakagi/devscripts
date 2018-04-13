@@ -32,9 +32,8 @@ rem - visual studio native 64 bit shell
 rem - if you want to use the 32 bit compiler then use, x86
 rem - if you want to use the 32 to 64 bit cross compiler, use x86_amd64
 SET LLL_VS2015_ENV="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64 
-SET LLL_VS2017_VERSION="Community"
-rem - SET LLL_VS2017_VERSION="Professional"
-SET LLL_VS2017_ENV="C:\Program Files (x86)\Microsoft Visual Studio\2017\%LLL_VS2017_VERSION%\VC\Auxiliary\Build\vcvars64.bat"
+SET LLL_VS2017_COM_ENV="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+SET LLL_VS2017_PRO_ENV="C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Auxiliary\Build\vcvars64.bat"
 rem - msys2 install location
 SET LLL_MSYS2_DIR="C:\installs\msys2"
 
@@ -53,7 +52,11 @@ if "%1"=="vs2015" (
 )
 
 if "%1"=="vs2017" (
-  call %LLL_VS2017_ENV%
+  if exist %LLL_VS2017_COM_ENV% (
+    call %LLL_VS2017_COM_ENV%
+  ) else (
+    call %LLL_VS2017_PRO_ENV%
+  )
   goto INTERACTIVE
 )
 

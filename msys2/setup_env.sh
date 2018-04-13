@@ -10,6 +10,7 @@
 # Adjust these local variables to accomodate your environment.
 export INSTALLS_DIR=/c/installs
 export UNPACKS_DIR=/c/unpacks
+
 export WINDOWS_PROGRAMS="/c/Program Files"
 export WINDOWS_PROGRAMS_X86="/c/Program Files (x86)"
 
@@ -55,16 +56,6 @@ prepend_library_path() {
 # Prepend the executable search path with an absolute path.
 prepend_path() {
   PATH=$1:${PATH}
-}
-
-# Prepend environment paths with binaries for custom built project. 
-prepend_env() {
-  # The .lib files are usually placed in the lib dirs.
-  LD_LIBRARY_PATH=${INSTALL_DIR}/$1/lib:${LD_LIBRARY_PATH}
-  # Sometimes the dlls are placed into the lib dir, so we add this to the path as well.
-  PATH=${INSTALL_DIR}/$1/lib:${PATH}
-  # Executables are usually placed in the bin dirs.
-  PATH=${INSTALL_DIR}/$1/bin:${PATH}
 }
 
 # --------------------------------------------------------------------

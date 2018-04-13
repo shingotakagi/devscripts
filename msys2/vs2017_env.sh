@@ -9,7 +9,17 @@
 DOWNLOAD_DIR=/c/dev/downloads
 SRC_DIR=/c/dev/src
 BUILD_DIR=/c/dev/builds
-INSTALL_DIR=/c/dev/builds/installs
+BUILD_INSTALLS_DIR=/c/dev/builds/installs
+
+# Prepend environment paths with binaries for custom built project. 
+prepend_env() {
+  # The .lib files are usually placed in the lib dirs.
+  LD_LIBRARY_PATH=${BUILD_INSTALLS_DIR}/$1/lib:${LD_LIBRARY_PATH}
+  # Sometimes the dlls are placed into the lib dir, so we add this to the path as well.
+  PATH=${BUILD_INSTALLS_DIR}/$1/lib:${PATH}
+  # Executables are usually placed in the bin dirs.
+  PATH=${BUILD_INSTALLS_DIR}/$1/bin:${PATH}
+}
 
 # Add MSBuild.exe onto the path.
 prepend_path "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin"
@@ -31,8 +41,8 @@ DEFAULT_OPTS="${DEBUG_OPT} ${SHARED_OPT}"
 configure() {
   lib_name=$1
   opts=${@:2}
-  echo -G"Eclipse CDT4 - Ninja" ${opts} -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR}/${lib_name} ${SRC_DIR}/${lib_name}
-  cmake -G"Eclipse CDT4 - Ninja" ${opts} -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR}/${lib_name} ${SRC_DIR}/${lib_name}
+  echo -G"Eclipse CDT4 - Ninja" ${opts} -DCMAKE_INSTALL_PREFIX=${BUILD_INSTALLS_DIR}/${lib_name} ${SRC_DIR}/${lib_name}
+  cmake -G"Eclipse CDT4 - Ninja" ${opts} -DCMAKE_INSTALL_PREFIX=${BUILD_INSTALLS_DIR}/${lib_name} ${SRC_DIR}/${lib_name}
 }
 
 build(){
@@ -396,4 +406,5 @@ build_qt() {
   cp -f ${SRC_DIR}/devscripts/msys2/build_qt.bat .
   ./build_qt.bat . 
 }
+
 
